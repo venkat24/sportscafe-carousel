@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="jquery-min.js"></script>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" images="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+  <title>SportsCafe Carousel</title>
+  <style type="text/css">
+    .main {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 12px;
+        width: 680px;     
+        position: relative;
+        margin: 5px;
+        box-shadow: 2px 2px 10px #ccc;
+        border: 1px solid #ccc;
+        overflow: hidden;
+    }
+    .images {
+        width: 480px;  
+        margin: 0;
+        padding: 0;
+    }
+    .images li {
+        font-size: 100px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        text-align: left;
+        z-index: 2;
+    }
+    .info-view {
+        position: relative;
+        color: white;
+        margin: 0 auto;
+        float: right;
+    }
+    .info-header {
+        text-align: center;
+        width: 100%;
+        vertical-align: middle;
+        background-color: #22638a;
+        height: 30px;
+        line-height: 30px;
+        border-left : 1px solid #b5b5b5;  
+        text-align: center;
+    }
+    .info-obj {
+        margin: 0 auto;
+        border-top:1px solid #1f5579;
+        height: 72px;
+        width: 200px;
+        text-align: left;
+        border-left : 1px solid #b5b5b5;  
+        vertical-align: center;
+        color: #a4b8c3;
+        overflow: hidden;
+        background-color: #22638a;
+    }
+    .inner-text {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+    .active-obj {
+        margin-left: 5px;
+        border-top:1px solid #1f5579;
+        height: 72px;
+        width: 160px;
+        text-align: left;
+        color: #a4b8c3;
+        background-color: #22638a;
+    }
+    .active {
+        height: 320px;
+    }
+    .main button {
+        border: none;
+        visibility: hidden;
+    }
+    .active button {
+        visibility: visible;
+    } 
+    .offscreen {
+        position: absolute;
+        left: -2000px;
+    }
+    .active li {
+        position: absolute;
+        top: 0px;
+        opacity: 0;
+        transition: 1s;
+    }
+    .active li.current {
+        top: 0px;
+        opacity: 1;
+        transition: 1s;
+    }
+    .li img {
+        width: 480px;
+        height: 320px;
+        display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="main">
+  <div class="images-box">
+  <ol class="images">
+    <li><img src="images/1.jpg" alt="1" id="img1"></li>
+    <li><img src="images/2.jpg" alt="2" id="img2"></li>
+    <li><img src="images/3.jpg" alt="3" id="img3"></li>
+    <li><img src="images/4.jpg" alt="4" id="img4"></li>
+  </ol>
+  </div>
+
+  <div class="info-view">
+    <div class="info-header">
+        <b>EDITOR'S PICKS</b>
+    </div>
+    
+    <div class="info-obj" id="tag1">
+        <div class="inner-text">
+            </br>HOCKEY</br>
+            <span class="subtext">
+                Sreejesh to lead India in the Asian Champions Trophy Hockey
+            </span>
+        </div>
+    </div>
+    
+    <div class="info-obj" id="tag2">
+        <div class="inner-text">
+            </br>TENNIS </br>
+            <span class="subtext">
+                Sharapova slams ITF antidoping chief after her reduced ban 
+            </span>
+        </div>
+    </div>
+    
+    <div class="info-obj" id="tag3">
+        <div class="inner-text">
+            </br>KABADDI</br>
+            <span class="subtext">
+                Kabaddi World Cup 2016 | Preview : India look set to defend title
+            </span>
+        </div>
+    </div>
+    
+    <div class="info-obj" id="tag4">
+        <div class="inner-text">
+            </br>FOOTBALL</br>
+            <span class="subtext">
+                Czech players who told female referee to return ‘to the cooker’ ... 
+            </span>
+        </div>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+
+carousel = (function(){
+        var box = document.getElementsByClassName('main')[0];
+        var images = document.getElementsByClassName('images-box')[0];
+        startInterval();
+        var count = 0;
+        var items = box.querySelectorAll('.images li');
+        var amount = items.length;
+        var current = items[0];
+        var timer;
+        box.classList.add('active');
+        
+        function startInterval() {
+            timer = setInterval(function(){ changeImage(1); }, 2500);
+        }
+
+        function changeImage(direction) {
+
+            current.classList.remove('current');
+
+            count = (count + direction) % amount;
+            if(count<0) {
+            	count=amount-1;
+            }
+
+            current = items[count];
+            current.classList.add('current');
+        }
+
+        $("#tag1").mouseover(function(){
+            current.classList.remove('current');
+            current=items[0];
+            current.classList.add('current');
+            clearInterval(timer);
+            $("#tag1").css("background-color","#1c4f6e");
+        });
+        $("#tag2").mouseover(function(){
+            current.classList.remove('current');
+            current=items[1];
+            current.classList.add('current');
+            clearInterval(timer);
+            $("#tag2").css("background-color","#1c4f6e");
+        });
+		$("#tag3").mouseover(function(){
+            current.classList.remove('current');
+            current=items[2];
+            current.classList.add('current');
+            clearInterval(timer);
+            $("#tag3").css("background-color","#1c4f6e");
+        });
+        $("#tag4").mouseover(function(){
+            current.classList.remove('current');
+            current=items[3];
+            current.classList.add('current');
+            clearInterval(timer);
+            $("#tag4").css("background-color","#1c4f6e");
+        });
+
+
+
+        $("#tag1").mouseout(function(){
+            startInterval();
+            $("#tag1").css("background-color","#22638a");
+        });
+        $("#tag2").mouseout(function(){
+            startInterval();
+            $("#tag2").css("background-color","#22638a");
+        });
+        $("#tag3").mouseout(function(){
+            startInterval();
+            $("#tag3").css("background-color","#22638a");
+        });
+        $("#tag4").mouseout(function(){
+            startInterval();
+            $("#tag4").css("background-color","#22638a"); //Change color change to a class application
+        });
+    changeImage(0);
+})();
+
+  
+</script>
+</body>
+</html>
